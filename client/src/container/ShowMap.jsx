@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import L, { Icon } from 'leaflet';
 export default function ShowMap({pilots,adminLocation}) {
     const redMarkerIcon = new L.Icon({
         iconUrl: 'https://freepngimg.com/thumb/symbol/62766-map-symbol-computer-location-icons-free-download-png-hd.png',
@@ -15,7 +15,7 @@ export default function ShowMap({pilots,adminLocation}) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {pilots?.map(pilot => (
-                <Marker key={pilot?._id} position={[pilot?.coordinates?.latitude, pilot?.coordinates?.longitude]}>
+                <Marker  key={pilot?._id} position={[pilot?.coordinates?.latitude, pilot?.coordinates?.longitude]}>
                     <Popup>
                         <div className='flex flex-col items-center gap-1'>
                             <img src={pilot?.profileImage} className='rounded-full h-16 w-16' alt="" />
