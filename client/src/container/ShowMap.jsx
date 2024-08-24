@@ -5,7 +5,12 @@ import L, { Icon } from 'leaflet';
 export default function ShowMap({pilots,adminLocation}) {
     const redMarkerIcon = new L.Icon({
         iconUrl: 'https://freepngimg.com/thumb/symbol/62766-map-symbol-computer-location-icons-free-download-png-hd.png',
-        iconSize: [40, 40],
+        iconSize: [35, 35],
+      });
+      
+    const blueMarkerIcon = new L.Icon({
+        iconUrl: 'https://freepngimg.com/thumb/map/66930-map-google-icons-collection-maps-computer-marker.png',
+        iconSize: [35, 35],
       });
       
     return (
@@ -15,7 +20,7 @@ export default function ShowMap({pilots,adminLocation}) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {pilots?.map(pilot => (
-                <Marker  key={pilot?._id} position={[pilot?.coordinates?.latitude, pilot?.coordinates?.longitude]}>
+                <Marker icon={blueMarkerIcon}  key={pilot?._id} position={[pilot?.coordinates?.latitude, pilot?.coordinates?.longitude]}>
                     <Popup>
                         <div className='flex flex-col items-center gap-1'>
                             <img src={pilot?.profileImage} className='rounded-full h-16 w-16' alt="" />

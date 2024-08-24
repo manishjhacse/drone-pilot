@@ -30,7 +30,7 @@ export default function MapPage() {
     getAdminLocation();
   }, [])
   const handleTopPilots = async () => {
-    if (isNaN(Number(range))) {
+    if (range===""||isNaN(Number(range))) {
       toast.error('Please enter a valid range')
       return;
     }
