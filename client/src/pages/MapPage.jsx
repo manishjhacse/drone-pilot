@@ -5,16 +5,20 @@ import 'leaflet/dist/leaflet.css';
 import ShowMap from '../container/ShowMap';
 import { toast } from 'react-hot-toast';
 export default function MapPage() {
+  const [loading, setLoading] = useState(false)
   const [pilots, setPilots] = useState(null);
   const [adminLocation, setAdminLocation] = useState(null);
   const [range, setRange] = useState("")
   const getAllPilots = async () => {
     const url = import.meta.env.VITE_BASE_URL;
     try {
+      setLoading(true)
       const response = await axios.get(`${url}/`)
       setPilots(response.data)
+      setLoading(false)
     } catch (err) {
       console.log(err)
+      setLoading(false)
     }
   }
   const getAdminLocation = () => {
@@ -30,11 +34,11 @@ export default function MapPage() {
     getAdminLocation();
   }, [])
   const handleTopPilots = async () => {
-    if (range===""||isNaN(Number(range))) {
+    if (range === "" || isNaN(Number(range))) {
       toast.error('Please enter a valid range')
       return;
     }
-    if(!adminLocation){
+    if (!adminLocation) {
       getAdminLocation()
     }
     const url = import.meta.env.VITE_BASE_URL;
@@ -45,7 +49,7 @@ export default function MapPage() {
         range: Number(range)
       })
       setPilots(response.data)
-      if(response.data.length===0){
+      if (response.data.length === 0) {
         toast.error("No pilot available")
       }
     } catch (err) {
@@ -69,7 +73,7 @@ export default function MapPage() {
       toast.error('Please enter a valid range')
       return;
     }
-    if(!adminLocation){
+    if (!adminLocation) {
       getAdminLocation()
     }
     try {
@@ -79,7 +83,7 @@ export default function MapPage() {
         range: Number(range)
       })
       setPilots(response.data)
-      if(response.data.length===0){
+      if (response.data.length === 0) {
         toast.error("No pilot available")
       }
     } catch (err) {
@@ -87,7 +91,7 @@ export default function MapPage() {
     }
   }
   return (
-    <div className='h-screen w-screen py-5 md:w-10/12 gap-5 md:px-5 px-2 mx-auto flex flex-col'>
+    <div className='relative h-screen w-screen py-5 md:w-10/12 gap-5 md:px-5 px-2 mx-auto flex flex-col'>
       <div className=' flex mx-auto md:flex-row gap-3 flex-col'>
 
         <input onChange={(e) => {
@@ -100,6 +104,11 @@ export default function MapPage() {
       </div>
 
       <ShowMap className="h-full" pilots={pilots} adminLocation={adminLocation} />
+
+      <div className={`px-4 z-20 py-4 ${loading?"scale-100":"scale-0"} transition-all duration-150 rounded-md bg-gray-700 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white h-[200px] w-[200px] flex flex-col items-center justify-center gap-3`}>
+        <span className='border-l-2  border-white h-10 w-10 animate-spin rounded-full'></span>
+        <span className='font-semibold'>Loading...</span>
+      </div>
     </div>
   )
 }

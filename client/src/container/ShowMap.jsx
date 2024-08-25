@@ -14,7 +14,7 @@ export default function ShowMap({pilots,adminLocation}) {
       });
       
     return (
-        <MapContainer center={[23.2599, 77.4126]} zoom={5} scrollWheelZoom={true} className='h-full rounded-md overflow-y-scroll' >
+        <MapContainer center={[23.2599, 77.4126]} zoom={5} scrollWheelZoom={true} className='h-full z-10 rounded-md overflow-y-scroll' >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
